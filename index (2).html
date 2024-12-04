@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click the Button Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+            background-color: #f0f8ff;
+        }
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+        #game-button {
+            position: absolute;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            display: none;
+        }
+        #score {
+            font-size: 24px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Click the Button Game</h1>
+    <div id="score">Score: 0</div>
+    <div id="game-container">
+        <button id="game-button" onclick="buttonClicked()">Click Me!</button>
+    </div>
+
+    <script>
+        let score = 0;
+
+        // Function to move the button randomly within the container
+        function moveButton() {
+            const button = document.getElementById('game-button');
+            const container = document.getElementById('game-container');
+            
+            const maxX = container.offsetWidth - button.offsetWidth;
+            const maxY = container.offsetHeight - button.offsetHeight;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            button.style.left = randomX + 'px';
+            button.style.top = randomY + 'px';
+        }
+
+        // Function to handle button click
+        function buttonClicked() {
+            score += 1;
+            document.getElementById('score').textContent = 'Score: ' + score;
+            moveButton();
+        }
+
+        // Function to show the button after a random delay
+        function showButton() {
+            const button = document.getElementById('game-button');
+            setTimeout(() => {
+                button.style.display = 'block';  // Show the button
+                moveButton();  // Move it to a random position
+            }, Math.random() * 2000 + 1000);  // Random delay between 1 and 3 seconds
+        }
+
+        // Start the game
+        function startGame() {
+            document.getElementById('game-button').style.display = 'none'; // Initially hide the button
+            setInterval(showButton, 3000); // Show the button every 3 seconds
+        }
+
+        // Initialize the game when the page loads
+        window.onload = startGame;
+    </script>
+
+</body>
+</html>
